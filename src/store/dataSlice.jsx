@@ -18,6 +18,9 @@ const dataSlice = createSlice({
         name: action.payload.name,
         location: action.payload.location,
         description: action.payload.description,
+        images: action.payload.images || [],
+        roomTypes: action.payload.roomTypes || [],
+        amenities: action.payload.amenities || [],
       });
     },
     addHostel: (state, action) => {
@@ -27,6 +30,9 @@ const dataSlice = createSlice({
         name: action.payload.name,
         location: action.payload.location,
         description: action.payload.description,
+        images: action.payload.images || [],
+        roomTypes: action.payload.roomTypes || [],
+        amenities: action.payload.amenities || [],
       });
     },
   },

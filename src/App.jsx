@@ -7,6 +7,7 @@ const App = () => {
   return (
     <Router>
       <nav className="flex justify-between p-4 bg-blue-600 text-white">
+        <Link to="/">Vidyamarg</Link>
         <Link to="/">Home</Link>
         <Link to="/admin">Admin</Link>
       </nav>
