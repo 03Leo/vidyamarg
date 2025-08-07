@@ -1,10 +1,8 @@
 import React from 'react';
 import { FaMapMarkerAlt, FaInfoCircle, FaRupeeSign, FaCheckCircle } from 'react-icons/fa';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
-const HostelCard = ({ hostel }) => {
+const HostelCard = ({ hostel, onBookNowClick }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -15,7 +13,7 @@ const HostelCard = ({ hostel }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden p-4 h-full flex flex-col justify-between">
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden p-4 h-full flex flex-col justify-between">
       <div>
         <Slider {...settings}>
           {hostel.images?.map((img, idx) => (
@@ -64,10 +62,9 @@ const HostelCard = ({ hostel }) => {
         </div>
       </div>
 
-      {/* Book Now Button */}
       <button
         className="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition duration-300 w-full"
-        onClick={() => alert(`Booking initiated for ${hostel.name}`)}
+        onClick={onBookNowClick} // ✅ Use parent's click handler
       >
         Book Now
       </button>
