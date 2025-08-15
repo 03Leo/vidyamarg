@@ -32,7 +32,7 @@ const BookNowForm = ({ onClose, hostel }) => {
 
     console.log('📦 Booking Info:', cleanedData);
     try {
-    const response = await fetch(`${'https://localhost:5000' || 'https://vidyamargbackend.onrender.com'}/api/send-mail`, {
+    const response = await fetch(`${'https://vidyamargbackend.onrender.com' || 'https://localhost:5000'}/api/send-mail`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
