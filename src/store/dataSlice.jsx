@@ -10,8 +10,8 @@ const initialState = {
 
 // Async thunk to fetch hostels
 export const fetchHostels = createAsyncThunk('data/fetchHostels', async () => {
-  // const response = await axios.get(`${'https://vidyamargbackend.onrender.com' || 'https://localhost:5000'}/api/hostels`);
-  const response = await axios.get(`http://localhost:5000/api/hostels`);
+  const response = await axios.get(`${'https://vidyamargbackend.onrender.com' || 'http://localhost:5000'}/api/hostels`);
+  // const response = await axios.get(`http://localhost:5000/api/hostels`);
   console.log('Fetched hostels:', response.data);
   return response.data;
 });
