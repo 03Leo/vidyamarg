@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { fetchHostels } from './store/dataSlice'; // ✅ import thunk
 import HomePage from './pages/HomePage';
 import AdminPanel from './pages/AdminPanel';
+import SupportPage from './pages/SupportPage';
 import { Menu, X } from 'lucide-react';
 
 const App = () => {
@@ -44,6 +45,13 @@ const App = () => {
               Home
             </Link>
             <Link
+              to="/support"
+              onClick={() => setIsOpen(false)}
+              className="block px-2 py-1 hover:bg-blue-700 rounded"
+            >
+              Support
+            </Link>
+            <Link
               to="/admin"
               onClick={() => setIsOpen(false)}
               className="block px-2 py-1 hover:bg-blue-700 rounded"
@@ -58,6 +66,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/support" element={<SupportPage />} />
       </Routes>
     </Router>
   );

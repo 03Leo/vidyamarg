@@ -5,6 +5,7 @@
   "homepage": "https://03Leo.github.io/vidyamarg",
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.11.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",

@@ -10,7 +10,8 @@ const initialState = {
 
 // Async thunk to fetch hostels
 export const fetchHostels = createAsyncThunk('data/fetchHostels', async () => {
-  const response = await axios.get(`${'https://vidyamargbackend.onrender.com' || 'https://localhost:5000'}/api/hostels`);
+  // const response = await axios.get(`${'https://vidyamargbackend.onrender.com' || 'https://localhost:5000'}/api/hostels`);
+  const response = await axios.get(`http://localhost:5000/api/hostels`);
   console.log('Fetched hostels:', response.data);
   return response.data;
 });
@@ -36,14 +37,27 @@ const dataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchHostels.fulfilled, (state, action) => {
-      action.payload.forEach((hostel) => {
+      action.payload.forEach((hostel, index) => {
+        const info = hostel.hostel_information;
+    
         state.lastHostelId += 1;
         state.hostels.push({
           id: state.lastHostelId,
-          ...hostel,
+          name: info.hostel_name,
+          location: info.address,
+          description: info.about_hostel,
+          amenities: [
+            ...(info.common_amenities || []),
+            ...(info.inroom_amenities || [])
+          ],
+          roomTypes: hostel.hostel_room_types.map(rt => ({
+            type: rt.room_type,
+            price: rt.price_per_person
+          }))
         });
       });
     });
+    
   },
 });
 
