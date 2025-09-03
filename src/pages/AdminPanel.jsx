@@ -97,16 +97,25 @@ const AdminPanel = () => {
 
     // send to backend API
     try {
-      const res = await fetch("http://localhost:5000/api/hostels", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+      const res = await fetch(
+        `${'https://vidyamargbackend.onrender.com' || 'http://localhost:5000'}/api/hostels`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+    
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+    
       const data = await res.json();
       console.log("Saved:", data);
     } catch (error) {
       console.error("Error saving hostel:", error);
     }
+    
   };
 
   return (
