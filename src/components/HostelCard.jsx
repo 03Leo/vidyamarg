@@ -1,98 +1,11 @@
-// import React from 'react';
-// import { FaMapMarkerAlt, FaInfoCircle, FaRupeeSign, FaCheckCircle } from 'react-icons/fa';
-// import Slider from 'react-slick';
-
-// const HostelCard = ({ hostel, onBookNowClick }) => {
-//   const settings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//     autoplay: true,
-//   };
-
-//   return (
-//     <div className="bg-white rounded-2xl shadow-xl overflow-hidden p-4 h-full flex flex-col justify-between">
-//       <div>
-//         <Slider {...settings}>
-//           {hostel.images?.map((img, idx) => (
-//             <div key={idx}>
-//               <img
-//                 src={img}
-//                 alt={`Slide ${idx}`}
-//                 className="w-full h-40 object-cover rounded-xl mb-2"
-//               />
-//             </div>
-//           ))}
-//         </Slider>
-
-//         <h3 className="text-lg font-semibold">{hostel.name}</h3>
-
-//         <p className="text-sm text-gray-600 flex items-center mt-1">
-//           <FaMapMarkerAlt className="mr-1 text-blue-600" />
-//           {hostel.location}
-//         </p>
-
-//         <p className="text-sm text-gray-600 flex items-center mt-1">
-//           <FaInfoCircle className="mr-1 text-green-600" />
-//           {hostel.description}
-//         </p>
-
-//         <div className="mt-2">
-//           <p className="font-medium">Room Types:</p>
-//           {hostel.roomTypes?.map((room, idx) => (
-//             <p key={idx} className="text-sm text-gray-700 flex items-center">
-//               <FaRupeeSign className="mr-1 text-yellow-600" />
-//               {room.type}: ₹{room.price}
-//             </p>
-//           ))}
-//         </div>
-
-//         <div className="mt-2">
-//           <p className="font-medium">Amenities:</p>
-//           <ul className="text-sm text-gray-700 list-disc list-inside">
-//             {hostel.amenities?.map((item, idx) => (
-//               <li key={idx} className="flex items-center">
-//                 <FaCheckCircle className="mr-1 text-green-500" />
-//                 {item}
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//       </div>
-
-//       <button
-//         className="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition duration-300 w-full"
-//         onClick={onBookNowClick} // ✅ Use parent's click handler
-//       >
-//         Book Now
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default HostelCard;
 import React from 'react';
-import { FaMapMarkerAlt, FaInfoCircle, FaRupeeSign, FaCheckCircle, FaBed } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaInfoCircle, FaCheckCircle, FaBed } from 'react-icons/fa';
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // Custom CSS for sliders
 const sliderStyles = `
-  .room-slider .slick-slide {
-    padding: 0 4px;
-  }
-  .room-slider .slick-dots {
-    bottom: -25px;
-  }
-  .room-slider .slick-dots li button:before {
-    font-size: 8px;
-    color: #CBD5E1;
-  }
-  .room-slider .slick-dots li.slick-active button:before {
-    color: #2563EB;
-  }
-  
   .image-slider .slick-slide {
     padding: 0 2px;
   }
@@ -130,26 +43,39 @@ const HostelCard = ({ hostel, onBookNowClick }) => {
     pauseOnHover: true,
   };
 
+  const hasMultipleImages = hostel.images && hostel.images.length > 1;
+
   return (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden p-4 h-full flex flex-col justify-between">
       <style>{sliderStyles}</style>
       <div>
-        {/* Image slider */}
+        {/* Conditional rendering for image display */}
         {hostel.images && hostel.images.length > 0 ? (
-          <Slider {...settings} className="image-slider">
-            {hostel.images.map((img, idx) => (
-              <div key={idx}>
-                <img
-                  src={img}
-                  alt={`${hostel.name} - Image ${idx + 1}`}
-                  className="w-full h-40 object-cover rounded-xl mb-2"
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
-                  }}
-                />
-              </div>
-            ))}
-          </Slider>
+          hasMultipleImages ? (
+            <Slider {...settings} className="image-slider">
+              {hostel.images.map((img, idx) => (
+                <div key={idx}>
+                  <img
+                    src={img}
+                    alt={`${hostel.name} - view ${idx + 1}`}
+                    className="w-full h-40 object-cover rounded-xl mb-2"
+                    onError={(e) => {
+                      e.target.src = 'https://placehold.co/300x200?text=No+Image';
+                    }}
+                  />
+                </div>
+              ))}
+            </Slider>
+          ) : (
+            <img
+              src={hostel.images[0]}
+              alt={`${hostel.name} - view 1`}
+              className="w-full h-40 object-cover rounded-xl mb-2"
+              onError={(e) => {
+                e.target.src = 'https://placehold.co/300x200?text=No+Image';
+              }}
+            />
+          )
         ) : (
           <div className="w-full h-40 bg-gray-200 rounded-xl mb-2 flex items-center justify-center">
             <span className="text-gray-500 text-sm">No image available</span>
@@ -158,7 +84,6 @@ const HostelCard = ({ hostel, onBookNowClick }) => {
 
         {/* Hostel Info */}
         <h3 className="text-lg font-semibold">{hostel.name}</h3>
-
         <p className="text-sm text-gray-600 flex items-center mt-1">
           <FaMapMarkerAlt className="mr-1 text-blue-600" />
           {hostel.location}
@@ -199,29 +124,25 @@ const HostelCard = ({ hostel, onBookNowClick }) => {
         </div>
 
         {/* Amenities */}
-        {/* Amenities */}
-<div className="mt-4">
-  <p className="font-medium mb-2">Amenities:</p>
-  <div className="flex flex-wrap gap-2">
-    {hostel.amenities?.slice(0, 5).map((item, idx) => (
-      <span
-        key={idx}
-        className="px-3 py-1 bg-gray-100 text-sm rounded-lg shadow-sm border border-gray-200 flex items-center"
-      >
-        <FaCheckCircle className="mr-1 text-green-500" />
-        {item}
-      </span>
-    ))}
-
-    {/* Show '+X more' if there are extra amenities */}
-    {hostel.amenities?.length > 5 && (
-      <span className="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-lg font-medium cursor-pointer">
-        +{hostel.amenities.length - 5} more...
-      </span>
-    )}
-  </div>
-</div>
-
+        <div className="mt-4">
+          <p className="font-medium mb-2">Amenities:</p>
+          <div className="flex flex-wrap gap-2">
+            {hostel.amenities?.slice(0, 5).map((item, idx) => (
+              <span
+                key={idx}
+                className="px-3 py-1 bg-gray-100 text-sm rounded-lg shadow-sm border border-gray-200 flex items-center"
+              >
+                <FaCheckCircle className="mr-1 text-green-500" />
+                {item}
+              </span>
+            ))}
+            {hostel.amenities?.length > 5 && (
+              <span className="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-lg font-medium cursor-pointer">
+                +{hostel.amenities.length - 5} more...
+              </span>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Book Now button */}

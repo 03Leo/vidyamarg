@@ -52,6 +52,21 @@ const AdminPanel = () => {
   // Room Types
   const [roomTypes, setRoomTypes] = useState([]);
 
+  // Images
+  // New state for images
+const [imageUrls, setImageUrls] = useState([""]);
+
+const handleImageChange = (index, value) => {
+  const updated = [...imageUrls];
+  updated[index] = value;
+  setImageUrls(updated);
+};
+
+const addImageField = () => {
+  setImageUrls([...imageUrls, ""]);
+};
+
+
   const toggleAmenity = (list, setList, value) => {
     if (list.includes(value)) {
       setList(list.filter(item => item !== value));
@@ -90,7 +105,8 @@ const AdminPanel = () => {
         about_hostel: aboutHostel,
         building_age_years: parseInt(buildingAgeYears)
       },
-      hostel_room_types: roomTypes
+      hostel_room_types: roomTypes,
+      hostel_images: imageUrls.filter(url => url.trim() !== "")  // only non-empty URLs
     };
 
     console.log("Final JSON:", payload);
@@ -126,6 +142,25 @@ const AdminPanel = () => {
         {/* Hostel Info */}
         <input type="text" placeholder="Hostel Name" value={hostelName} onChange={(e) => setHostelName(e.target.value)} className="border p-2 w-full" required />
         <input type="text" placeholder="Owner Name" value={ownerName} onChange={(e) => setOwnerName(e.target.value)} className="border p-2 w-full" />
+        <h3 className="font-semibold mt-4">Hostel Images (Image URLs)</h3>
+{imageUrls.map((url, index) => (
+  <input
+    key={index}
+    type="text"
+    placeholder={`Image URL ${index + 1}`}
+    value={url}
+    onChange={(e) => handleImageChange(index, e.target.value)}
+    className="border p-2 w-full mb-2"
+  />
+))}
+<button
+  type="button"
+  onClick={addImageField}
+  className="bg-gray-500 text-white px-4 py-2 rounded"
+>
+  + Add Image
+</button>
+
         <select value={gender} onChange={(e) => setGender(e.target.value)} className="border p-2 w-full">
           <option value="Boys">Boys</option>
           <option value="Girls">Girls</option>

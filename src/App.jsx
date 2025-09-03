@@ -12,12 +12,12 @@ const App = () => {
   const dispatch = useDispatch();
 
   // ✅ Fetch hostel data on app load
-  useEffect(() => {
-    dispatch(fetchHostels());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchHostels());
+  // }, [dispatch]);
 
   return (
-    <Router>
+    <Router basename="/vidyamarg" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <nav className="bg-blue-600 text-white p-4">
         <div className="container mx-auto flex items-center justify-between">
           <Link to="/" className="text-lg font-bold">

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import HostelCard from '../components/HostelCard';
 import BookNowForm from '../components/BookNowForm';
 import Slider from 'react-slick';
@@ -8,7 +8,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Search, Filter, MapPin } from 'lucide-react';
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { fetchHostels } from '../store/dataSlice';
 
 const HomePage = () => {
   const hostels = useSelector((state) => state.data.hostels);
@@ -19,6 +20,12 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    dispatch(fetchHostels());
+  }, [dispatch, location.pathname]); // 👈 refetch every time pathname changes
 
   useEffect(() => {
     if (hostels.length > 0) {

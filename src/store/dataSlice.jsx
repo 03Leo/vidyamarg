@@ -37,6 +37,7 @@ const dataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchHostels.fulfilled, (state, action) => {
+      state.hostels = []; // ✅ Reset hostels array on fetch
       action.payload.forEach((hostel, index) => {
         const info = hostel.hostel_information;
     
@@ -53,7 +54,8 @@ const dataSlice = createSlice({
           roomTypes: hostel.hostel_room_types.map(rt => ({
             type: rt.room_type,
             price: rt.price_per_person
-          }))
+          })),
+          images: hostel.images || [] // ✅ add image support
         });
       });
     });
